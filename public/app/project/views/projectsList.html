@@ -1,0 +1,60 @@
+<div class="projects-list">
+    <h2>
+        All Projects
+    </h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <th>
+                    Project Name
+                </th>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Finished Percentage
+                </th>
+                <th ng-click="sortReverse = !sortReverse" style="cursor:pointer">
+                    Meeting Hours
+                </th>
+                <th>
+                    Associates Number
+                </th>
+                <th ng-show="project.pivot.role == 'ADMIN'">
+                    Delete
+                </th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="project in projectsList.projects | orderBy:'meeting_hours':sortReverse">
+                    <td>
+                        {{ project.project_name }}
+                    </td>
+                    <td>
+                        {{ project.start_date | date }}
+                    </td>
+                    <td>
+                        {{ project.end_date | date }}
+                    </td>
+                    <td>
+                        {{ project.finished_percentage }}%
+                    </td>
+                    <td>
+                        {{ project.meeting_hours | millSecondsToTimeString }}
+                    </td>
+                    <td>
+                        {{ project.associates_number }}
+                    </td>
+                    <td ng-show="project.pivot.role == 'ADMIN'">
+                        <button ng-click="projectsList.deleteProject(project)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove-circle"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

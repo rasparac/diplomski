@@ -1,0 +1,115 @@
+<div class="meeting-settings">
+    <header class="page-header">
+        <h2>Meeting Settings</h2>
+    </header>
+    <div class="row">
+        <form class="form-horizontal" role="form" ng-submit="meetingSettings.updateMeeting()">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="meeting-title" class="col-sm-3 control-label">Meeting Title:</label>
+                    <div class="col-sm-9">
+                        <input
+                            id="meeting-title"
+                            ng-model="meetingSettings.meeting.title"
+                            type="text"
+                            class="form-control"
+                            placeholder="Meeting Title">
+                            <validation-errors
+                                ng-show='meetingSettings.validationErrors["title"]'
+                                error-messages='meetingSettings.validationErrors["title"]'>
+                            </validation-errors>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="meeting-start-date" class="col-sm-3 control-label">Start Datetime:</label>
+                    <div class="col-sm-9">
+                        <input
+                            type="text"
+                            id="meeting-start-date"
+                            bs-datepicker
+                            data-date-format="dd/MM/yyyy"
+                            data-max-date="{{ meetingSettings.meeting.meeting_start }}"
+                            data-autoclose="true"
+                            class="form-control meeting-date col-md-3"
+                            placeholder="Date"
+                            ng-model="meetingSettings.meeting.meeting_start"
+                        >
+                        <input
+                            type="text"
+                            class="form-control meeting-time"
+                            ng-model="meetingSettings.meeting.meeting_start"
+                            data-time-format="HH:mm"
+                            data-minute-step="15"
+                            data-autoclose="true"
+                            placeholder="Time"
+                            bs-timepicker>
+                        <validation-errors
+                            ng-show='meetingSettings.validationErrors["meeting_start"]'
+                            error-messages='meetingSettings.validationErrors["meeting_start"]'>
+                        </validation-errors>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="meeting-end-date" class="col-sm-3 control-label">End Datetime:</label>
+                    <div class="col-sm-9">
+                        <input
+                            type="text"
+                            id="meeting-end-date"
+                            bs-datepicker
+                            data-date-format="dd/MM/yyyy"
+                            data-max-date="{{ meetingSettings.meeting.meeting_end}}"
+                            data-autoclose="true"
+                            class="form-control meeting-date col-md-3"
+                            placeholder="Date"
+                            ng-model="meetingSettings.meeting.meeting_end"
+                        >
+                        <input
+                            type="text"
+                            class="form-control meeting-time"
+                            ng-model="meetingSettings.meeting.meeting_end"
+                            data-time-format="HH:mm"
+                            data-minute-step="15"
+                            data-autoclose="false"
+                            placeholder="Time"
+                            bs-timepicker>
+                        <validation-errors
+                            ng-show='meetingSettings.validationErrors["meeting_end"]'
+                            error-messages='meetingSettings.validationErrors["meeting_end"]'>
+                        </validation-errors>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description" class="col-sm-3 control-label">Description:</label>
+                    <div class="col-sm-9">
+                        <textarea
+                            id="description"
+                            ng-model="meetingSettings.meeting.description"
+                            rows="8"
+                            class="form-control"
+                            placeholder="Description"></textarea>
+                        <validation-errors
+                            ng-show='meetingSettings.validationErrors["description"]'
+                            error-messages='meetingSettings.validationErrors["description"]'>
+                        </validation-errors>
+                    </div>
+                </div>
+                <button class="btn btn-primary pull-right">Save</button>
+            </div>
+        </form>
+    </div>
+    <div class="row meeting-settings-footer">
+        <button
+            class="btn btn-default pull-right"
+            ui-sref="di.main.meeting.settings.tasks"
+        >Add New Task
+        </button>
+        <button
+            class="btn btn-default pull-right task-list-btn"
+            ui-sref="di.main.meeting.settings.taskList"
+        >Task List
+        </button>
+    </div>
+    <div class="row" ui-view></div>
+</div>

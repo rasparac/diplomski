@@ -1,0 +1,30 @@
+.meetings-timeline {
+    
+    .timeline-header {
+        padding-bottom: 20px;
+    }
+    
+    .start {
+        top: -35px;
+    }
+    
+    .end {
+        top: 0px;
+    }
+    
+    .start, .end {
+         width: 9%;
+        font-size: 13px;
+        left: 48%;
+    }
+    
+    .meeting-state {
+        cursor: pointer;
+    }
+    
+    .meeting-tasks {
+        position: relative;
+        top: -55px;
+    }
+    
+}

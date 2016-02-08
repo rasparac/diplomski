@@ -1,0 +1,39 @@
+<div class="project-timeline">
+    <header class="timeline-header">
+        <h3>Project Timeline</h3>
+        <button class="btn btn-success pull-right" ng-click="timeline.showEventModal()">Create Event</button>
+        <hr>
+    </header>
+    <timeline>
+        <timeline-event>
+            <timeline-badge class="start timeline-inverted">
+                <span>{{ timeline.project.start_date | date }}</span>
+            </timeline-badge>
+        </timeline-event>
+        <timeline-event ng-repeat="event in timeline.events | orderBy:'meeting_start'" side="{{ event.user_id == 1 ? 'right' : 'left' }}">
+        <timeline-badge class="info">
+            <i class="glyphicon glyphicon-check"></i>
+        </timeline-badge>
+            <timeline-panel class="info">
+                <timeline-heading>
+                <h5>{{event.title}}</h5>
+                <hr>
+                </timeline-heading>
+                <p>{{event.description}}</p>
+                <hr>
+                <timeline-footer>
+                    <span>Start: {{ event.meeting_start }}</span> <br>
+                    <span>End: {{ event.meeting_end }}</span>
+                    <span class="pull-right"> Created By: {{ event.users.username }}</span>
+                </timeline-footer>
+            </timeline-panel>
+            <timeline-event>
+        </timeline-event>
+        </timeline-event>
+        <timeline-event>
+            <timeline-badge class="glyphicon-check end">
+                <i class="glyphicon glyphicon-check"></i>
+            </timeline-badge>
+        </timeline-event>
+    </timeline>
+</div>

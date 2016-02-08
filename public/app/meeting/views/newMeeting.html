@@ -1,0 +1,101 @@
+<div class="create-meeting">
+    <header class="page-header">
+        <h2>Create New Meeting</h2>
+    </header>
+    
+    <form class="form-horizontal" role="form" ng-submit="createMeeting.createMeeting()">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="meeting-title" class="col-sm-3 control-label">Meeting Title:</label>
+                <div class="col-sm-9">
+                    <input
+                        id="meeting-title"
+                        ng-model="createMeeting.meetingData.title"
+                        type="text"
+                        class="form-control"
+                        placeholder="Meeting Title">
+                        <validation-errors
+                            ng-show='createMeeting.validationErrors["title"]'
+                            error-messages='createMeeting.validationErrors["title"]'>
+                        </validation-errors>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="meeting-start-date" class="col-sm-3 control-label">Start Datetime:</label>
+                <div class="col-sm-9">
+                    <input
+                        type="text"
+                        id="meeting-start-date"
+                        bs-datepicker
+                        data-date-format="dd/MM/yyyy"
+                        data-max-date="{{ createMeeting.meetingData.meeting_start }}"
+                        data-autoclose="true"
+                        class="form-control meeting-date col-md-3"
+                        placeholder="Date"
+                        ng-model="createMeeting.meetingData.meeting_start"
+                    >
+                    <input
+                        type="text"
+                        class="form-control meeting-time"
+                        ng-model="createMeeting.meetingData.meeting_start"
+                        data-time-format="HH:mm"
+                        data-minute-step="15"
+                        data-autoclose="true"
+                        placeholder="Time"
+                        bs-timepicker>
+                    <validation-errors
+                        ng-show='createMeeting.validationErrors["meeting_start"]'
+                        error-messages='createMeeting.validationErrors["meeting_start"]'>
+                    </validation-errors>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="meeting-end-date" class="col-sm-3 control-label">End Datetime:</label>
+                <div class="col-sm-9">
+                    <input
+                        type="text"
+                        id="meeting-end-date"
+                        bs-datepicker
+                        data-date-format="dd/MM/yyyy"
+                        data-max-date="{{ createMeeting.meetingData.meeting_end }}"
+                        data-autoclose="true"
+                        class="form-control meeting-date col-md-3"
+                        placeholder="Date"
+                        ng-model="createMeeting.meetingData.meeting_end"
+                    >
+                    <input
+                        type="text"
+                        class="form-control meeting-time"
+                        ng-model="createMeeting.meetingData.meeting_end"
+                        data-time-format="HH:mm"
+                        data-minute-step="15"
+                        data-autoclose="false"
+                        placeholder="Time"
+                        bs-timepicker>
+                    <validation-errors
+                        ng-show='createMeeting.validationErrors["meeting_end"]'
+                        error-messages='createMeeting.validationErrors["meeting_end"]'>
+                    </validation-errors>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="description" class="col-sm-3 control-label">Description:</label>
+                <div class="col-sm-9">
+                    <textarea
+                        id="description"
+                        ng-model="createMeeting.meetingData.description"
+                        rows="8"
+                        class="form-control"
+                        placeholder="Description"></textarea>
+                    <validation-errors
+                        ng-show='createMeeting.validationErrors["description"]'
+                        error-messages='createMeeting.validationErrors["description"]'>
+                    </validation-errors>
+                </div>
+            </div>
+            <button class="btn btn-primary pull-right">Save</button>
+        </div>
+    </form>
+</div>

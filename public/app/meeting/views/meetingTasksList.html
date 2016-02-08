@@ -1,0 +1,23 @@
+<div class="task-list-table col-md-5">
+    <h4>Tasks:</h4>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <th>Description</th>
+                <th>Status</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in meetingTasks.meetingTaskList">
+                    <td>{{ task.description }}</td>
+                    <td><input type="checkbox" ng-model="task.status" ng-change="meetingTasks.updateStatus(task)"></td>
+                    <td>
+                        <button ng-click="meetingTasks.deleteTask(task)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove-circle"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

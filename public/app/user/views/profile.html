@@ -1,0 +1,76 @@
+<div class="user-profile">
+    <h3>
+        User Profile Settings
+    </h3>
+
+    <hr>
+
+    <div class="col-md-4">
+            <div class="thumbnail" ng-click="profile.showModal()">
+              <img ng-src="{{profile.user.image_url || 'default.png'}}" alt="burek">
+            </div>
+            <span>Upload Profile Picture</span>
+    </div>
+
+    <form class="form-horizontal" ng-submit="profile.updateProfile()">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email" class="col-sm-3 control-label">Email:</label>
+                <div class="col-sm-9">
+                    <input
+                        id="email"
+                        ng-style="profile.validationErrors['email'].length > 0 && { 'border-color': 'red' }"
+                        type="text"
+                        ng-model="profile.user.email"
+                        class="form-control"
+                        placeholder="Email">
+                    <validation-errors
+                        ng-show='profile.validationErrors["email"]'
+                        error-messages='profile.validationErrors["email"]'>
+                    </validation-errors>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username" class="col-sm-3 control-label">Username:</label>
+                <div class="col-sm-9">
+                    <input
+                        id="username"
+                        type="text"
+                        ng-model="profile.user.username"
+                        class="form-control"
+                        placeholder="Username">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="first-name" class="col-sm-3 control-label">First Name:</label>
+                <div class="col-sm-9">
+                    <input
+                        id="first-name"
+                        type="text"
+                        ng-model="profile.user.first_name"
+                        class="form-control"
+                        placeholder="First Name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="last-name" class="col-sm-3 control-label">Last Name:</label>
+                <div class="col-sm-9">
+                    <input
+                        id="last-name"
+                        type="text"
+                        ng-model="profile.user.last_name"
+                        class="form-control"
+                        placeholder="Last Name">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 save-button">
+            <div class="form-group">
+                <button class="btn btn-primary btn-sm">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

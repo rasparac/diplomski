@@ -1,0 +1,27 @@
+.modal.upload-picture {
+
+    .cropArea {
+        background: rgba(228, 228, 228, 0.3);
+        overflow: hidden;
+        width: 350px;
+        height: 350px;
+    }
+
+    .modal-dialog {
+        width: 60%;
+    }
+
+    .cropped-img {
+        img {
+            position: relative;
+            left: 20%;
+            margin-top: 68px;
+            border: 2px solid grey;
+        }
+    }
+
+    .select-picture {
+        margin-top: 10px;
+        margin-bottom: -20px;
+    }
+}

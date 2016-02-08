@@ -1,0 +1,15 @@
+<div class="invite-user col-md-9">   
+    <form class="form-horizontal" ng-submit="meetingTasks.addTask()">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="meeting-task" class="control-label" >Add Task:</label>
+                <input id="meeting-task" ng-model="meetingTasks.taskData.description" type="text" class="form-control" placeholder="Description">
+                <validation-errors ng-show="meetingTasks.validationErrors['description']" error-messages="meetingTasks.validationErrors['description']">
+                </validation-errors>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-primary">Add Task</button>
+            </div>
+        </div>
+    </form>
+</div>

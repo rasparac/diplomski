@@ -1,0 +1,15 @@
+<div class="invite-user col-md-9">
+    <form role="form" class="form" ng-submit="invite.sendInvitation()">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="invitation-email" class="control-label">Email:</label>
+                <input id="invitation-email" ng-model="invite.invitationData.email" type="text" class="form-control" placeholder="Email">
+                <validation-errors ng-show="invite.validationErrors['email']" error-messages="invite.validationErrors['email']">
+                </validation-errors>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-primary">Send</button>
+            </div>
+        </div>
+    </form>
+</div>

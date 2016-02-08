@@ -1,0 +1,95 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" ui-sref="di.main.home" style="color: white;">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown" ng-show="main.invitations.length > 0">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                        <i class="fa fa-bell"></i> <span class="count-info">
+                            {{ main.invitations.length }}
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu invitations">
+                        <li ng-repeat="invitation in main.invitations">
+                                <div>
+                                    Invited By:<strong>{{ invitation.invited_by_username }}</strong>
+                                </div>
+                                <div class="pull-right accept-decline">
+                                        <span class="glyphicon glyphicon-ok" ng-click="main.acceptInvitation(invitation)"></span>
+                                        <span class="glyphicon glyphicon-remove" ng-click="main.declineInvitation(invitation)"></span>
+                                    </div>
+                                <div>
+                                    Project Name: {{ invitation.project_name }}
+                                </div>
+                            <div ng-hide="$last" class="divider"></div>
+                        </li>
+                    </ul>
+                </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <div>{{ main.user.username || 'Unknown' }}</div>
+                    <span ng-class="{ 'current-project-name': main.user.current_project.project_name }">
+                        {{ main.user.current_project.project_name }}
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="project in main.user.projects" ng-click="main.changeProject(project, true)">
+                        <a id="projects">{{ project.project_name }}</a>
+                    </li>
+                    <li ng-show="main.user.projects.length > 0" role="separator" class="divider"></li>
+                    <li>
+                        <a ui-sref="di.main.profile({ id: main.user.id })"><i class="fa fa-user"></i>Profile</a>
+                    </li>
+                    <li>
+                        <a href="/logout" ng-click="main.logout()"><i class="fa fa-plug"></i>Logout</a>
+                    </li>
+                </ul>
+            </li>
+          </ul>
+        </div>
+     </div>
+</nav>
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+    <li class="sidebar-brand"></li>
+    <li>
+        <a
+            ui-sref="di.main.project.settings({ userId: main.user.id, projectId: main.user.current_project.id })"
+            ng-show="main.user.projects.length > 0"
+            ><i class="fa fa-cog"></i>
+            Project Settings
+        </a>
+    </li>
+    <li>
+        <a
+            ui-sref="di.main.meeting.timeline({ userId: main.user.id, projectId: main.user.current_project.id })"
+            ng-show="main.user.projects.length > 0"
+            ><i class="fa fa-cog"></i>
+            Meetings Timeline
+        </a>
+    </li>
+    <li>
+        <a ui-sref="di.main.project.new({ userId: main.user.id })"><i class="fa fa-plus"></i> Add New Project</a>
+    </li>
+    <li>
+        <a ui-sref="di.main.project.list({ userId: main.user.id })"><i class="fa fa-list"></i> All Projects</a>
+    </li>
+    </ul>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div ui-view class="col-md-11 col-md-offset-3 main">
+
+        </div>
+    </div>
+</div>

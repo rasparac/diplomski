@@ -1,0 +1,42 @@
+<div class="meetings-timeline">
+    <header class="timeline-header">
+        <h3>Meetings Timeline</h3>
+        <hr>
+    </header>
+    <timeline>
+        <timeline-event>
+            <timeline-badge class="start timeline-inverted">
+                <span>{{ meetingTimeline.project.start_date | date }}</span>
+            </timeline-badge>
+        </timeline-event>
+        <timeline-event ng-repeat="meeting in meetingTimeline.meetings | orderBy:'meeting_start'" side="{{ $odd ? 'right' : 'left' }}">
+        <timeline-badge class="meeting-state" ng-class="{info:meeting.finishedTasks == meeting.tasks.length, warning: meeting.finishedTasks != meeting.tasks.length }">
+            <i class="glyphicon"
+            ui-sref="di.main.meeting.settings({ userId: meeting.users.id, projectId: meetingTimeline.project.id, meetingId: meeting.id })"
+            ng-class="{'glyphicon-tasks': meeting.finishedTasks != meeting.tasks.length, 'glyphicon-check': meeting.finishedTasks == meeting.tasks.length}"
+            ></i>
+        </timeline-badge>
+            <timeline-panel class="info">
+                <timeline-heading>
+                <h3>{{meeting.title}}</h3>
+                <h3 class="meeting-tasks pull-right">{{ meeting.finishedTasks }}/{{ meeting.tasks.length }}</h3>
+                <hr>
+                </timeline-heading>
+                <p>{{meeting.description}}</p>
+                <hr>
+                <timeline-footer>
+                    <span>Start: {{ meeting.meeting_start | date:'yyyy-MM-dd HH:mm:ss Z' }}</span> <br>
+                    <span>End: {{ meeting.meeting_end | date:'yyyy-MM-dd HH:mm:ss Z' }}</span>
+                    <span class="pull-right"> Created By: {{ meeting.users.username }}</span>
+                </timeline-footer>
+            </timeline-panel>
+            <timeline-event>
+        </timeline-event>
+        </timeline-event>
+        <timeline-event>
+            <timeline-badge class="timeline-inverted end">
+                <span>{{ meetingTimeline.project.end_date | date }}</span>
+            </timeline-badge>
+        </timeline-event>
+    </timeline>
+</div>

@@ -1,0 +1,102 @@
+.navbar-inverse {
+
+    .navbar-brand {
+        margin-left: 50px !important;
+        margin-top: 10px;
+    }
+
+    .navbar-right {
+        margin-right: 50px !important;
+    }
+
+    .navbar-nav > li > a {
+        display: block;
+        text-decoration: none;
+        color: #FFFFFF !important;
+    }
+
+    .open a {
+        background-color: #009688 !important;
+
+        &:focus {
+            background-color: #009688 !important;
+        }
+        &:hover {
+            background-color: #009688 !important;
+        }
+    }
+
+    .dropdown-menu {
+        background-color: #424958;
+        padding: 10px;
+        top: 40px;
+        li {
+            a {
+                background-color: #424958 !important;
+                color: #FFFFFF;
+
+                &:hover {
+                    background-color: #51c1b1 !important;
+                }
+            }
+
+            i {
+                min-width: 20px;
+            }
+        }
+    }
+
+    .current-project-name {
+        font-size: 13px;
+        color: #51c1b1;
+        top: 5px;
+        position: relative;
+    }
+    
+    .invitations {
+        width: 310px;
+        min-width: 0;
+        background-color: #424958 !important;
+        color: #FFFFFF;
+        
+        .dropdown-menu li {
+            display: block;
+        }
+        
+        .accept-decline {
+            position: relative;
+            top: -10px;
+            
+            span:first-of-type {
+                margin-right: 10px;   
+            }
+            
+            span {
+                cursor: pointer;
+                font-size: 25px;
+            }
+        }
+    }
+    
+    .count-info {
+        line-height: 12px;
+        padding: 2px 6px;
+        position: absolute;
+        right: 6px;
+        top: 8px;
+        color: #1ab394;
+        background-color: #FFFFFF;
+        font-family: 'Open Sans';
+        font-size: 10px;
+        font-weight: 600;
+        text-shadow: none;
+        border-radius: 5px;
+    }
+    
+    @media (min-width: 768px) {
+        .navbar-top-links .invitations, .navbar-top-links .dropdown-tasks, .navbar-top-links .dropdown-alerts {
+            margin-left: auto;
+        }
+    }
+
+}

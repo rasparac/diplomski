@@ -1,0 +1,33 @@
+<div class="modal upload-picture" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">×</button>
+                <h4 class="modal-title" ng-bind-html="title">Some Title</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <img-crop required
+                            class="col-md-6 cropArea"
+                            image="picFile  | ngfDataUrl"
+                            result-image="croppedDataUrl" ng-model="croppedDataUrl" ng-init="croppedDataUrl=''">
+                        </img-crop>
+                        <div class="col-md-6 cropped-img">
+                            <img ng-src="{{ croppedDataUrl }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <button class="btn btn-default select-picture" ngf-select ng-model="picFile" accept="image/*" >
+                        Select Picture
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="profile.upload(croppedDataUrl)">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
