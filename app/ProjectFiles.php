@@ -8,7 +8,7 @@ class ProjectFiles extends Model {
 
     protected $table = 'project_files';
 
-    protected $fillable = ['project_id', 'name', 'path'];
+    protected $fillable = ['user_id', 'project_id', 'name', 'path'];
 
     public function projects() {
         return $this->belongsTo('App\Project');

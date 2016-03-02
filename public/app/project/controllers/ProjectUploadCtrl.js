@@ -15,7 +15,7 @@ function ProjectUploadCtrl(Upload, UserService, Messages, Restangular) {
     vm.uploadFiles = function (files) {
         if (files && files.length) {
             Upload.upload({
-                url: 'api/v1/projects/' + project.id + '/uploadFiles',
+                url: 'api/v1/users/' + user.id + '/projects/' + project.id + '/uploadFiles',
                 method: 'POST',
                 sendFieldsAs: 'form',
                 data: {
@@ -28,7 +28,7 @@ function ProjectUploadCtrl(Upload, UserService, Messages, Restangular) {
             }, function (error) {
                 console.log("error", error);
             }, function (evt) {
-                console.log(Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
+               // console.log(Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
             });
         }
     };

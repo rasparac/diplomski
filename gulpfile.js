@@ -24,23 +24,24 @@ var scriptDest = dest + 'js';
 var stylePath = path + '.scss';
 var styleDest = dest + 'css';
 
-elixir(function(mix) {
-    mix.sass('app.scss');
+elixir(function (mix) {
+    mix.sass('app.scss').
+        sass('app/**/*.scss', 'public/css/all.css');
     mix.task('scripts', srciptPath);
-    mix.task('style', stylePath);
+    //mix.task('style', stylePath);
 });
 
-gulp.task('style', function() {
+/*gulp.task('style', function() {
     return gulp.src(stylePath)
         .pipe(sass().on('error', sass.logError))
         .pipe(concat('style.css'))
         .pipe(sass({outputStyle: 'compressed'}))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(styleDest));
-});
+});*/
 
 gulp.task('scripts', function() {
     return gulp.src(srciptPath)
-        .pipe(concat('scripts.js'))
+        .pipe(concat('script.js'))
         .pipe(gulp.dest(scriptDest));
 })

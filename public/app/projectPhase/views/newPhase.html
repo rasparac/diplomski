@@ -1,0 +1,59 @@
+<div class="new-phase">
+    <header class="page-header">
+        <div class="row">
+            <h2>
+                Create Project Phase
+            </h2>
+        </div>
+    </header>
+ 
+    <form class="form-horizontal">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="phase-title" class="col-sm-3 control-label">Phase Title:</label>
+                <div class="col-sm-9">
+                    <input id="phase-title" ng-model="timeline.phaseData.title" type="text" class="form-control" placeholder="Phase Title">
+                    <validation-errors ng-show='createMeeting.validationErrors["title"]' error-messages='createMeeting.validationErrors["title"]'>
+                    </validation-errors>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="start-date" class="col-sm-3 control-label">Start Date:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="start-date" bs-datepicker data-date-format="MM/dd/yyyy" data-min-date="{{ timeline.phaseData.start }}"
+                    class="form-control" placeholder="Start Date" data-autoclose="true" ng-model="timeline.phaseData.start">
+                    <validation-errors ng-show='createProject.validationErrors["start"]' error-messages='createProject.validationErrors["start"]'>
+                    </validation-errors>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="end-date" class="col-sm-3 control-label">End Date:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="end-date" bs-datepicker data-date-format="MM/dd/yyyy" data-min-date="{{ timeline.phaseData.end }}"
+                    class="form-control" placeholder="End Date" data-autoclose="true" ng-model="timeline.phaseData.end">
+                    <validation-errors ng-show='createProject.validationErrors["end"]' error-messages='createProject.validationErrors["end"]'>
+                    </validation-errors>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div>
+                <div class="form-group">
+                    <label for="phase-description" class="col-sm-3 control-label">Phase Description:</label>
+                    <div class="col-sm-9">
+                        <textarea
+                            id="phase-description"
+                            ng-model="timeline.phaseData.description"
+                            rows="7" class="form-control"
+                            placeholder="Phase Description">
+                        </textarea>
+                        <validation-errors
+                            ng-show='createMeeting.validationErrors["description"]'
+                            error-messages='createMeeting.validationErrors["description"]'>
+                        </validation-errors>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

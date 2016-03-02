@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class Project extends Model {
 
@@ -17,6 +19,19 @@ class Project extends Model {
         'project_name', 'start_date', 'end_date', 'project_logo',
         'associates_number', 'created_by', 'description', 'finished_percentage'
     ];
+
+    public static function boot() {
+
+        parent::boot();
+
+        static::deleted(function($project) {
+            $path = public_path('files/projects/' . $project->id);
+
+            if (File::exists($path)) {
+                File::deleteDirectory($path);
+            }
+        });
+    }
 
     public function users() {
         return $this->belongsToMany('App\User')

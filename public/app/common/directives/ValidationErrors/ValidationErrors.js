@@ -5,7 +5,7 @@ angular
     .directive('validationErrors', validationErrors);
 
 function validationErrors() {
-    return {
+    var directive = {
         restrict: 'E',
         scope: {
             errorMessages: '=?'

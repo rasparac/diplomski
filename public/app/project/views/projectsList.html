@@ -49,7 +49,7 @@
                         {{ project.associates_number }}
                     </td>
                     <td ng-show="project.pivot.role == 'ADMIN'">
-                        <button ng-click="projectsList.deleteProject(project)" class="btn btn-sm btn-danger">
+                        <button after-confirmation="projectsList.deleteProject(project)" class="btn btn-sm btn-danger" confirm-message="Are you sure?">
                             <i class="glyphicon glyphicon-remove-circle"></i>
                         </button>
                     </td>

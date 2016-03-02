@@ -4,7 +4,7 @@ angular
     .module('di',
     ['restangular', 'ui.router', 'di.ui', 'main', 'ngStorage', 'auth', 'home', 'project', 'ui.bootstrap',
     'mgcrea.ngStrap', 'profile', 'di.messages', 'userService', 'projectService', 'ngFileUpload', 'ngImgCrop', 'invitationService',
-    'meeting', 'meetingService', 'angular-timeline', 'di.filters', 'meetingTaskService'])
+    'meeting', 'meetingService', 'projectPhase', 'angular-timeline', 'di.filters', 'meetingTaskService', 'di.confirmPopUp'])
     .config(function(RestangularProvider, $stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');

@@ -39,7 +39,7 @@ function ProjectsListCtrl(loggedUser, UserService, ProjectService, $scope, $stat
             }
 
             if (isCurrent && vm.projects.length > 0) {
-                UserService.changeCurrentProject(vm.user, project.id).then(function() {
+                UserService.changeCurrentProject(vm.user, vm.projects[0].id).then(function() {
                     return;
                 });
             }

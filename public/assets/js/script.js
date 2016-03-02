@@ -4,7 +4,7 @@ angular
     .module('di',
     ['restangular', 'ui.router', 'di.ui', 'main', 'ngStorage', 'auth', 'home', 'project', 'ui.bootstrap',
     'mgcrea.ngStrap', 'profile', 'di.messages', 'userService', 'projectService', 'ngFileUpload', 'ngImgCrop', 'invitationService',
-    'meeting', 'meetingService', 'angular-timeline', 'di.filters', 'meetingTaskService'])
+    'meeting', 'meetingService', 'projectPhase', 'angular-timeline', 'di.filters', 'meetingTaskService', 'di.confirmPopUp'])
     .config(function(RestangularProvider, $stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
@@ -266,6 +266,24 @@ angular
             });
     });
 
+'use strict';
+
+angular
+    .module('projectPhase', ['ui.router'])
+    .config(function ($stateProvider) {
+        $stateProvider
+            .state('di.main.phase', {
+                url: 'users/:userId/projects/:projectId/phases',
+                templateUrl: 'app/projectPhase/views/projectPhase.html',
+                abstract: true,
+            })
+            .state('di.main.phase.new', {
+                url: '/new',
+                templateUrl: 'app/projectPhase/views/newPhase.html',
+                controller: 'CreatePhaseCtrl',
+                controllerAs: 'createPhase'
+            })
+    });
 'use strict';
 
 angular
@@ -538,6 +556,25 @@ function Messages(toastr) {
     }
 }
 
+'use strict';
+
+angular
+    .module('projectPhaseService', [])
+    .factory('ProjectPhaseService', ProjectPhaseService)
+
+ProjectPhaseService.$inject = ['$q', 'Restangular'];
+
+function ProjectPhaseService($q, Restangular) {
+    var service = {
+        createPhase: createPhase
+    }
+    
+    function createPhase(user, projectId, data) {
+        
+    }
+    
+    return service;
+}
 'use strict';
 
 angular
@@ -898,10 +935,10 @@ function ProjectSettingsCtrl(ProjectService, $state, Messages, $scope, Upload, $
           });
         }, function (response) {
           if (response.status > 0)
-            $scope.errorMsg = response.status + ': ' + response.data;
+            console.log(response.status + ': ' + response.data);
         }, function (evt) {
           // Math.min is to fix IE which reports 200% sometimes
-          file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          //file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
     }
 }
@@ -975,7 +1012,7 @@ function ProjectUploadCtrl(Upload, UserService, Messages, Restangular) {
     vm.uploadFiles = function (files) {
         if (files && files.length) {
             Upload.upload({
-                url: 'api/v1/projects/' + project.id + '/uploadFiles',
+                url: 'api/v1/users/' + user.id + '/projects/' + project.id + '/uploadFiles',
                 method: 'POST',
                 sendFieldsAs: 'form',
                 data: {
@@ -988,7 +1025,7 @@ function ProjectUploadCtrl(Upload, UserService, Messages, Restangular) {
             }, function (error) {
                 console.log("error", error);
             }, function (evt) {
-                console.log(Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
+               // console.log(Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
             });
         }
     };
@@ -1035,7 +1072,7 @@ function ProjectsListCtrl(loggedUser, UserService, ProjectService, $scope, $stat
             }
 
             if (isCurrent && vm.projects.length > 0) {
-                UserService.changeCurrentProject(vm.user, project.id).then(function() {
+                UserService.changeCurrentProject(vm.user, vm.projects[0].id).then(function() {
                     return;
                 });
             }
@@ -1048,6 +1085,20 @@ function ProjectsListCtrl(loggedUser, UserService, ProjectService, $scope, $stat
 
 }
 
+'use strict';
+
+angular
+    .module('projectPhase')
+    .controller('CreatePhaseCtrl', CreatePhaseCtrl);
+    
+    
+function CreatePhaseCtrl() {
+    var vm = this;
+    
+    vm.createPhase = function () {
+        
+    }
+}
 'use strict';
 
 angular
@@ -1112,11 +1163,36 @@ function ProfileCtrl(UserService, loggedUser, Messages, $state, Upload, $modal) 
 'use strict';
 
 angular
+    .module('di.confirmPopUp', [])
+    .directive('afterConfirmation', confirmPopUp);
+    
+function confirmPopUp() {
+    var directive = {
+        restrict: 'A',
+        link: link
+    }
+
+    function link(scope, elem, attrs) {
+        elem.bind('click', function (e) {
+            var msg = attrs.confirmMessage;
+            if (msg && confirm(msg)) {
+                scope.$apply(attrs.afterConfirmation);
+            }
+        });
+    }
+
+    return directive;
+}
+
+
+'use strict';
+
+angular
     .module('di.ui', [])
     .directive('validationErrors', validationErrors);
 
 function validationErrors() {
-    return {
+    var directive = {
         restrict: 'E',
         scope: {
             errorMessages: '=?'

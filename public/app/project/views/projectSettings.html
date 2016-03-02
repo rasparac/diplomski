@@ -4,10 +4,16 @@
             <h2>
                 Project Settings
             </h2>
-            <button class="btn btn-success pull-right"
-                ui-sref="di.main.meeting.new({ userId: projectSettings.userId , projectId: projectSettings.project.id })">
-                Create Meeting
-            </button>
+            <div class="pull-right">
+                <button class="btn btn-primary pull-left phase"
+                    ui-sref="di.main.phase.new({ userId: projectSettings.userId , projectId: projectSettings.project.id })">
+                    Create Project Phase
+                </button>
+                <button class="btn btn-success pull-right"
+                    ui-sref="di.main.meeting.new({ userId: projectSettings.userId , projectId: projectSettings.project.id })">
+                    Create Meeting
+                </button>
+            <div>
         </div>
     </header>
     <div class="row">

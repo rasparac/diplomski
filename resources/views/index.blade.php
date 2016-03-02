@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="/stylesheets/angular-timeline/angular-timeline.css" />
         <link rel="stylesheet" href="/stylesheets/angularStrap/bootstrap-additions.min.css" />
         <link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="/assets/css/style.min.css">
+        <link rel="stylesheet" href="/css/all.css">
         <script type="text/javascript" src="/lib/angular/angular.min.js"></script>
         <script src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
         <script src="/lib/lodash/lodash.js"></script>
@@ -24,8 +24,8 @@
         <script type="text/javascript" src="/lib/angular-ui/angular-toastr.tpls.js"></script>
         <script type="text/javascript" src="/lib/bootstrap-ui/ui-bootstrap-tpls.min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-        <script type="text/javascript" src="/assets/js/scripts.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script> 
+        <script type="text/javascript" src="/assets/js/script.js"></script>
         <base href="/">
     </head>
     <body ng-app="di">

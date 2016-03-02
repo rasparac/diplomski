@@ -57,9 +57,14 @@ Route::group(['prefix' => 'api/v1'], function() {
         get('projects/{projectId}/getUploadedFiles', 'Project\ProjectsController@getUploadedFiles');
         post('users/{userId}/projects', 'Project\ProjectsController@post');
         post('projects/upload', 'Project\ProjectsController@upload');
-        post('projects/{projectId}/uploadFiles', 'Project\ProjectsController@uploadFiles');
+        post('users/{userId}/projects/{projectId}/uploadFiles', 'Project\ProjectsController@uploadFiles');
         put('projects/{projectId}', 'Project\ProjectsController@put');
         delete('users/{userId}/projects/{projectId}', 'Project\ProjectsController@delete');
+
+        /**
+         * Project Phases routes
+         */
+        post('users/{userId}/projects/{projectId}/phases', 'ProjectPhase\ProjectPhasesController@post');
 
         /**
          * Meeting routes

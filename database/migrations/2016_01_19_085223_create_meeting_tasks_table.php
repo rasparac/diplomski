@@ -14,10 +14,12 @@ class CreateMeetingTasksTable extends Migration
     {
         Schema::create('meeting_tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('meeting_id');
+            $table->integer('meeting_id')->unsigned()->index();
             $table->string('description');
             $table->boolean('status')->default(false);
             $table->timestamps();
+
+            $table->foreign('meeting_id')->references('id')->on('meetings')->onDelete('cascade');
         });
     }
 

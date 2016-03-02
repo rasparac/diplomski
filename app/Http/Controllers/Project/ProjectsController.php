@@ -50,7 +50,7 @@ class ProjectsController extends Controller {
         return response()->json(['success' => 'Deleted successfully!', 200]);
     }
 
-    public function uploadFiles($projectId, Request $request) {
+    public function uploadFiles($userId, $projectId, Request $request) {
         $path = 'files/projects/' . $projectId;
         $destinationPath = public_path($path);
 
@@ -61,6 +61,7 @@ class ProjectsController extends Controller {
         foreach ($request->file('files') as $file) {
             $fileName = $file->getClientOriginalName();
             $data['project_id'] = $projectId;
+            $data['user_id'] = $userId;
             $data['name'] = $fileName;
             $data['path'] = $path . '/' . $fileName;
 
@@ -72,6 +73,7 @@ class ProjectsController extends Controller {
 
     public function getUploadedFiles($projectId) {
         $files = $this->project->get($projectId)->files()->get()->toArray();
+
         return $files;
     }
 
