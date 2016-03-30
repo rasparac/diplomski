@@ -9,4 +9,8 @@ interface ProjectPhaseInterface {
 
     public function create($userId, $projectId, $data);
 
+    public function getAllPhasesForProject($userId, $projectId);
+
+    public function getProjectPhaseMeetings($projectPhaseId);
+
 }

@@ -13,7 +13,7 @@ class ProjectPhaseRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class ProjectPhaseRequest extends Request
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'description' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
         ];
     }
 }

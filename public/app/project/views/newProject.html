@@ -73,10 +73,12 @@
                 <label for="start-date" class="col-sm-3 control-label">Start Date:</label>
                 <div class="col-sm-9">
                     <input
+                        datepicker-localdate
                         type="text"
                         id="start-date"
                         bs-datepicker
                         data-date-format="dd/MM/yyyy"
+                        data-min-date="{{ createProject.minDate }}"
                         data-max-date="{{ createProject.projectData.end_date }}"
                         data-autoclose="true"
                         class="form-control"
@@ -93,6 +95,7 @@
                 <label for="end-date" class="col-sm-3 control-label">End Date:</label>
                 <div class="col-sm-9">
                     <input
+                        datepicker-localdate
                         type="text"
                         id="end-date"
                         bs-datepicker

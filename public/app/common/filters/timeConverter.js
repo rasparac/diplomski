@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('di.filters', [])
+    .module('di.filters')
     .filter('millSecondsToTimeString', function () {
         return function (miliseconds) {
             if (miliseconds) {

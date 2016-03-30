@@ -71,6 +71,12 @@ class ProjectsController extends Controller {
         }
     }
 
+    public function getProjectPhases($userId, $projectId) {
+        $projectPhases = $this->project->getProjectPhases($userId, $projectId)->toArray();
+
+        return $projectPhases;
+    }
+
     public function getUploadedFiles($projectId) {
         $files = $this->project->get($projectId)->files()->get()->toArray();
 

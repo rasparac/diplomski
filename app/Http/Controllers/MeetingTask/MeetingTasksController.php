@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\MeetingTasks;
+namespace App\Http\Controllers\MeetingTask;
 
 
 use App\Http\Controllers\Controller;

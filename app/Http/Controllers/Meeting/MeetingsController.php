@@ -25,6 +25,7 @@ class MeetingsController extends Controller {
 
     public function post($userId, $projectId, MeetingRequest $request) {
         $input = $request->all();
+
         $meeting = $this->meeting->create($userId, $projectId, $input);
 
         return $meeting;

@@ -39,6 +39,10 @@ class Project extends Model {
                     ->withTimestamps();
     }
 
+    public function phases() {
+        return $this->hasMany('App\ProjectPhase');
+    }
+
     public function invitations() {
         return $this->hasMany('App\Invitation');
     }

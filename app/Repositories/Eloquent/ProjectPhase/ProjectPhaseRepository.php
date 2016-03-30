@@ -13,7 +13,7 @@ class ProjectPhaseRepository extends EloquentRepository implements ProjectPhaseI
     }
 
     public function get($id) {
-
+        return $this->model->find($id);
     }
 
     public function create($userId, $projectId, $data) {
@@ -25,4 +25,21 @@ class ProjectPhaseRepository extends EloquentRepository implements ProjectPhaseI
         return $phase;
     }
 
+    public function getAllPhasesForProject($userId, $projectId) {
+        $phases = $this->model
+                ->where('user_id', $userId)
+                ->where('project_id', $projectId)
+                ->get()
+                ->toArray();
+
+        return $phases;
+    }
+
+    public function getProjectPhaseMeetings($projectPhaseId) {
+        $projectPhase = $this->get($projectPhaseId);
+
+        $meetings = $projectPhase->meetings()->get();
+
+        return $meetings;
+    }
 }

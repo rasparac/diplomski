@@ -26,8 +26,8 @@ class MeetingRequest extends Request
         return [
             'title' => 'required',
             'description' => 'required',
-            'meeting_start' => 'required',
-            'meeting_end' => 'required'
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
         ];
     }
 }

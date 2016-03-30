@@ -196,25 +196,12 @@
   margin-right: 10px; }
 
 .meetings-timeline .timeline-header {
-  padding-bottom: 20px; }
-
-.meetings-timeline .start {
-  top: -35px; }
-
-.meetings-timeline .end {
-  top: 0px; }
-
-.meetings-timeline .start, .meetings-timeline .end {
-  width: 9%;
-  font-size: 13px;
-  left: 48%; }
-
-.meetings-timeline .meeting-state {
-  cursor: pointer; }
-
-.meetings-timeline .meeting-tasks {
-  position: relative;
-  top: -55px; }
+  border-bottom: 1px solid #808080;
+  margin-bottom: 55px;
+  margin-top: 20px; }
+  .meetings-timeline .timeline-header .control-label {
+    left: 95px;
+    line-height: 2; }
 
 .project-settings .page-header {
   margin: 0 0 30px; }
@@ -239,6 +226,29 @@
 
 .project-phase .new-phase .page-header {
   margin: 0 0 30px; }
+
+.project-phase-timeline .timeline-header {
+  border-bottom: 1px solid #808080;
+  margin-bottom: 55px;
+  margin-top: 20px; }
+
+.data-timeline .start {
+  top: -35px; }
+
+.data-timeline .end {
+  top: 0px; }
+
+.data-timeline .start, .data-timeline .end {
+  width: 9%;
+  font-size: 13px;
+  left: 48%; }
+
+.data-timeline .meeting-state {
+  cursor: pointer; }
+
+.data-timeline .meeting-tasks {
+  position: relative;
+  top: -55px; }
 
 .modal.upload-picture .cropArea {
   background: rgba(228, 228, 228, 0.3);

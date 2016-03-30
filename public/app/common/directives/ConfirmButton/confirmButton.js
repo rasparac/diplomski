@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('di.confirmPopUp', [])
+    .module('di.ui')
     .directive('afterConfirmation', confirmPopUp);
     
 function confirmPopUp() {

@@ -19,6 +19,8 @@
         <script src="/lib/ng-upload/ng-file-upload.min.js"></script>
         <script src="/lib/img-crop/img-crop.js"></script>
         <script src="/lib/angular-timeline/angular-timeline.js"></script>
+        <script src="/lib/moment/moment-with-locales.js"></script>
+        <script src="/lib/moment/moment-timezone.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.6/angular-strap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.6/angular-strap.tpl.js"></script>
         <script type="text/javascript" src="/lib/angular-ui/angular-toastr.tpls.js"></script>

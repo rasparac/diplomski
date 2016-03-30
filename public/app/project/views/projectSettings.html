@@ -88,6 +88,7 @@
                             id="start-date"
                             bs-datepicker
                             data-date-format="MM/dd/yyyy"
+                            data-min-date="{{ projectSettings.project.start_date }}"
                             data-max-date="{{ createProject.projectData.end_date }}"
                             class="form-control"
                             placeholder="Start Date"

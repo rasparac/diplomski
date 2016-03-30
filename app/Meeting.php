@@ -8,7 +8,7 @@ class Meeting extends Model {
 
     protected $table = 'meetings';
 
-    protected $fillable = ['user_id', 'project_id', 'meeting_start', 'meeting_end', 'title', 'description'];
+    protected $fillable = ['user_id', 'project_id', 'project_phase_id', 'start_date', 'end_date', 'title', 'description'];
 
     protected $with = ['tasks'];
 
@@ -18,6 +18,10 @@ class Meeting extends Model {
 
     public function projects() {
         return $this->belongsTo('App\Project', 'project_id');
+    }
+
+    public function projectPhases() {
+        return $this->belongsTo('App\ProjectPhase', 'project_phase_id');
     }
 
     public function tasks() {

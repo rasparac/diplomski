@@ -1,0 +1,40 @@
+<div class="data-timeline">
+    <timeline>
+        <timeline-event>
+            <timeline-badge class="start timeline-inverted">
+                <span>{{project.start_date | date}}</span>
+            </timeline-badge>
+        </timeline-event>
+        <timeline-event ng-repeat="timeline in timelineData" side="{{ $odd ? 'right' : 'left' }}">
+            <timeline-badge class="meeting-state" ng-class="{info:meeting.finishedTasks == meeting.tasks.length, warning: meeting.finishedTasks != meeting.tasks.length }">
+                <i class="glyphicon"
+                ui-sref="{{ state + '({' + 
+                    'userId: timeline.user_id' + ', ' + 'projectId: timeline.project_id' + ', ' + ' meetingId: timeline.id ' + '})' }}"
+                ng-class="{'glyphicon-tasks': meeting.finishedTasks != meeting.tasks.length, 'glyphicon-check': meeting.finishedTasks == meeting.tasks.length}"
+                ></i>
+            </timeline-badge>
+            <timeline-panel class="info">
+                <timeline-heading>
+                    <h3>{{timeline.title}}</h3>
+                    <h3 class="meeting-tasks pull-right">{{ timeline.finishedTasks }}/{{ timeline.tasks.length }}</h3>
+                    <hr>
+                </timeline-heading>
+                <p>{{timeline.description}}</p>
+                <hr>
+                <timeline-footer>
+                    <span>Start: {{ timeline.start_date | timezoneDate: dateFormat }}</span>
+                    <br>
+                    <span>End: {{ timeline.end_date | timezoneDate: dateFormat }}</span>
+                    <span class="pull-right"> Created By: {{ timeline.users.username }}</span>
+                </timeline-footer>
+            </timeline-panel>
+            <timeline-event>
+            </timeline-event>
+        </timeline-event>
+        <timeline-event>
+            <timeline-badge class="timeline-inverted end">
+                <span>{{project.start_date | date}}</span>
+            </timeline-badge>
+        </timeline-event>
+    </timeline>
+</div>

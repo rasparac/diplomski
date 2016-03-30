@@ -28,24 +28,23 @@
                             id="meeting-start-date"
                             bs-datepicker
                             data-date-format="dd/MM/yyyy"
-                            data-max-date="{{ meetingSettings.meeting.meeting_start }}"
                             data-autoclose="true"
                             class="form-control meeting-date col-md-3"
                             placeholder="Date"
-                            ng-model="meetingSettings.meeting.meeting_start"
+                            ng-model="meetingSettings.meeting.start_date"
                         >
                         <input
                             type="text"
                             class="form-control meeting-time"
-                            ng-model="meetingSettings.meeting.meeting_start"
+                            ng-model="meetingSettings.meeting.start_date"
                             data-time-format="HH:mm"
                             data-minute-step="15"
                             data-autoclose="true"
                             placeholder="Time"
                             bs-timepicker>
                         <validation-errors
-                            ng-show='meetingSettings.validationErrors["meeting_start"]'
-                            error-messages='meetingSettings.validationErrors["meeting_start"]'>
+                            ng-show='meetingSettings.validationErrors["start_date"]'
+                            error-messages='meetingSettings.validationErrors["start_date"]'>
                         </validation-errors>
                     </div>
                 </div>
@@ -57,24 +56,23 @@
                             id="meeting-end-date"
                             bs-datepicker
                             data-date-format="dd/MM/yyyy"
-                            data-max-date="{{ meetingSettings.meeting.meeting_end}}"
                             data-autoclose="true"
                             class="form-control meeting-date col-md-3"
                             placeholder="Date"
-                            ng-model="meetingSettings.meeting.meeting_end"
+                            ng-model="meetingSettings.meeting.end_date"
                         >
                         <input
                             type="text"
                             class="form-control meeting-time"
-                            ng-model="meetingSettings.meeting.meeting_end"
+                            ng-model="meetingSettings.meeting.end_date"
                             data-time-format="HH:mm"
                             data-minute-step="15"
                             data-autoclose="false"
                             placeholder="Time"
                             bs-timepicker>
                         <validation-errors
-                            ng-show='meetingSettings.validationErrors["meeting_end"]'
-                            error-messages='meetingSettings.validationErrors["meeting_end"]'>
+                            ng-show='meetingSettings.validationErrors["end_date"]'
+                            error-messages='meetingSettings.validationErrors["end_date"]'>
                         </validation-errors>
                     </div>
                 </div>

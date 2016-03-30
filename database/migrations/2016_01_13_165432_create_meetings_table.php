@@ -17,8 +17,8 @@ class CreateMeetingsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('project_id')->unsigned();
             $table->boolean('finished')->default(false);
-            $table->timestamp('meeting_start');
-            $table->timestamp('meeting_end');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->string('title');
             $table->longText('description');
             $table->timestamps();

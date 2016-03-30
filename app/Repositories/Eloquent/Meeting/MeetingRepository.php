@@ -20,8 +20,7 @@ class MeetingRepository extends EloquentRepository implements MeetingInterface {
         $meetings = $this->model
                 ->where('project_id', $projectId)
                 ->with('users')
-                ->get()
-                ->toArray();
+                ->get();
 
         return $meetings;
     }

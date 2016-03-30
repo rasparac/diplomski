@@ -18,7 +18,7 @@ function ProjectsListCtrl(loggedUser, UserService, ProjectService, $scope, $stat
         
         _.forEach(vm.projects, function (project) {
             _.forEach(project.meetings, function (meeting) {
-                 sum += Math.abs(new Date(meeting.meeting_end) - new Date(meeting.meeting_start));
+                 sum += Math.abs(new Date(meeting.end_date) - new Date(meeting.start_date));
                  project['meeting_hours'] = sum;
             });
             sum = 0;

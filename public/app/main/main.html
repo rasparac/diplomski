@@ -61,22 +61,30 @@
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
     <li class="sidebar-brand"></li>
-    <li>
-        <a
-            ui-sref="di.main.project.settings({ userId: main.user.id, projectId: main.user.current_project.id })"
-            ng-show="main.user.projects.length > 0"
-            ><i class="fa fa-cog"></i>
-            Project Settings
-        </a>
-    </li>
-    <li>
-        <a
-            ui-sref="di.main.meeting.timeline({ userId: main.user.id, projectId: main.user.current_project.id })"
-            ng-show="main.user.projects.length > 0"
-            ><i class="fa fa-cog"></i>
-            Meetings Timeline
-        </a>
-    </li>
+    <div ng-show="main.user.projects.length > 0">
+        <li>
+            <a
+                ui-sref="di.main.project.settings({ userId: main.user.id, projectId: main.user.current_project.id })"
+                ng-show="main.user.projects.length > 0"
+                ><i class="fa fa-cog"></i>
+                Project Settings
+            </a>
+        </li>
+        <li>
+            <a
+                ui-sref="di.main.phase.timeline({ userId: main.user.id, projectId: main.user.current_project.id })"
+                ><i class="fa fa-cog"></i>
+                Project Phases Timeline
+            </a>
+        </li>
+        <li>
+            <a
+                ui-sref="di.main.meeting.timeline({ userId: main.user.id, projectId: main.user.current_project.id })"          
+                ><i class="fa fa-cog"></i>
+                Meetings Timeline
+            </a>
+        </li>
+    </div>
     <li>
         <a ui-sref="di.main.project.new({ userId: main.user.id })"><i class="fa fa-plus"></i> Add New Project</a>
     </li>

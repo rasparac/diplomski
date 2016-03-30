@@ -39,6 +39,13 @@ class ProjectRepository extends EloquentRepository implements ProjectInterface {
         $project->users()->detach($userId);
     }
 
+    public function getProjectPhases($userId, $projectId) {
+        $project = $this->get($projectId);
+        $phases = $project->phases()->get();
+
+        return $phases;
+    }
+
     function model() {
         return 'App\Project';
     }

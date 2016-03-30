@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('di.ui', [])
+    .module('di.ui')
     .directive('validationErrors', validationErrors);
 
 function validationErrors() {

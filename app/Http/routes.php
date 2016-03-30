@@ -21,7 +21,6 @@ Route::group(['prefix' => 'api/v1'], function() {
     post('login', 'Auth\AuthController@login');
     post('registration', 'Auth\AuthController@register');
     get('logout', 'Auth\AuthController@logout');
-
     //fix this later
     //Route::group(['middleware' => ['jwt.refresh']], function() {
         //any('refresh_token', 'Auth\AuthController@refresh');
@@ -55,6 +54,7 @@ Route::group(['prefix' => 'api/v1'], function() {
          */
         get('projects/{id}', 'Project\ProjectsController@get');
         get('projects/{projectId}/getUploadedFiles', 'Project\ProjectsController@getUploadedFiles');
+        get('users/{userId}/projects/{projectId}/project-phases', 'Project\ProjectsController@getProjectPhases');
         post('users/{userId}/projects', 'Project\ProjectsController@post');
         post('projects/upload', 'Project\ProjectsController@upload');
         post('users/{userId}/projects/{projectId}/uploadFiles', 'Project\ProjectsController@uploadFiles');
@@ -64,6 +64,7 @@ Route::group(['prefix' => 'api/v1'], function() {
         /**
          * Project Phases routes
          */
+        get('users/{userId}/projects/{projectId}/phases/{phaseId}/meetings', 'ProjectPhase\ProjectPhasesController@getPhaseMeetings');
         post('users/{userId}/projects/{projectId}/phases', 'ProjectPhase\ProjectPhasesController@post');
 
         /**
@@ -78,9 +79,9 @@ Route::group(['prefix' => 'api/v1'], function() {
         /**
          * Meeting tasks
          */
-        get('meetings/{meetingId}/tasks', 'MeetingTasks\MeetingTasksController@getAll');
-        post('meetings/{meetingId}/tasks', 'MeetingTasks\MeetingTasksController@post');
-        put('meetings/{meetingId}/tasks/{taskId}', 'MeetingTasks\MeetingTasksController@updateStatus');
-        delete('meetings/{meetingId}/tasks/{taskId}', 'MeetingTasks\MeetingTasksController@delete');
+        get('meetings/{meetingId}/tasks', 'MeetingTask\MeetingTasksController@getAll');
+        post('meetings/{meetingId}/tasks', 'MeetingTask\MeetingTasksController@post');
+        put('meetings/{meetingId}/tasks/{taskId}', 'MeetingTask\MeetingTasksController@updateStatus');
+        delete('meetings/{meetingId}/tasks/{taskId}', 'MeetingTask\MeetingTasksController@delete');
     });
 });

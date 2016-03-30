@@ -3,8 +3,9 @@
 angular
     .module('di',
     ['restangular', 'ui.router', 'di.ui', 'main', 'ngStorage', 'auth', 'home', 'project', 'ui.bootstrap',
-    'mgcrea.ngStrap', 'profile', 'di.messages', 'userService', 'projectService', 'ngFileUpload', 'ngImgCrop', 'invitationService',
-    'meeting', 'meetingService', 'projectPhase', 'angular-timeline', 'di.filters', 'meetingTaskService', 'di.confirmPopUp'])
+        'mgcrea.ngStrap', 'profile', 'di.messages', 'userService', 'projectService', 'ngFileUpload', 'ngImgCrop', 'invitationService',
+        'meeting', 'meetingService', 'projectPhase', 'angular-timeline', 'di.filters', 'meetingTaskService', 'projectPhaseService'
+        ])
     .config(function(RestangularProvider, $stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
@@ -32,6 +33,7 @@ angular
             },
             responseError: function(response) {
                 if (response.status === 401 || response.status === 403) {
+                    console.log("response", response);
                     delete $localStorage.token;
                     $location.path('/login');
                 }
@@ -69,26 +71,6 @@ angular
             preventOpenDuplicates: true,
             target: 'body'
         });
-    });
-
-'use strict';
-
-angular
-    .module('auth', ['restangular', 'ui.router', 'ngStorage', 'toastr'])
-    .config(function(RestangularProvider, $stateProvider, $locationProvider) {
-        $stateProvider
-            .state('login', {
-                url: '/login',
-                templateUrl: 'app/auth/views/login.html',
-                controller: 'AuthCtrl',
-                controllerAs: 'auth'
-            })
-            .state('registration', {
-                url: '/registration',
-                templateUrl: 'app/auth/views/registration.html',
-                controller: 'AuthCtrl',
-                controllerAs: 'auth'
-            });
     });
 
 'use strict';
@@ -269,6 +251,25 @@ angular
 'use strict';
 
 angular
+    .module('auth', ['restangular', 'ui.router', 'ngStorage', 'toastr'])
+    .config(function(RestangularProvider, $stateProvider, $locationProvider) {
+        $stateProvider
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/auth/views/login.html',
+                controller: 'AuthCtrl',
+                controllerAs: 'auth'
+            })
+            .state('registration', {
+                url: '/registration',
+                templateUrl: 'app/auth/views/registration.html',
+                controller: 'AuthCtrl',
+                controllerAs: 'auth'
+            });
+    });
+'use strict';
+
+angular
     .module('projectPhase', ['ui.router'])
     .config(function ($stateProvider) {
         $stateProvider
@@ -282,6 +283,12 @@ angular
                 templateUrl: 'app/projectPhase/views/newPhase.html',
                 controller: 'CreatePhaseCtrl',
                 controllerAs: 'createPhase'
+            })
+            .state('di.main.phase.timeline', {
+                url: '/phase-timeline',
+                templateUrl: 'app/projectPhase/views/phaseTimeline.html',
+                controller: 'PhaseTimelineCtrl',
+                controllerAs: 'phaseTimeline'
             })
     });
 'use strict';
@@ -301,43 +308,15 @@ angular
 'use strict';
 
 angular
-    .module('auth')
-    .controller('AuthCtrl', AuthCtrl);
-
-    AuthCtrl.$inject = ['$scope', 'Restangular', '$localStorage', '$state', '$location', 'Messages'];
-
-function AuthCtrl($scope, Restangular, $localStorage, $state, $location, Messages) {
-
-    var vm = this;
-
-    vm.loginData = {};
-    vm.registrationData = {};
-
-    vm.login = function() {
-        Restangular.all('login').post(vm.loginData).then(function(res) {
-            $localStorage.token = res.token;
-            $state.transitionTo('di.main.home');
-        }, function(error) {
-            console.log(error);
-            Messages.warning("Invalid credentials!");
-        });
-    }
-
-    vm.registration = function() {
-        Restangular.all('registration').post(vm.registrationData).then(function(res) {
-            $state.transitionTo('login');
-        }, function(error) {
-            vm.validationErrors = error.data;
-            Messages.error("Check required fields!");
-        })
-    }
-
-}
-
+    .module('di.ui', []);
 'use strict';
 
 angular
-    .module('di.filters', [])
+    .module('di.filters', []);
+'use strict';
+
+angular
+    .module('di.filters')
     .filter('millSecondsToTimeString', function () {
         return function (miliseconds) {
             if (miliseconds) {
@@ -350,6 +329,18 @@ angular
                 return HH + ':' + MM + ' h';
             }
             return '-:-';
+        }
+    });
+'use strict';
+
+angular
+    .module('di.filters')
+    .filter('timezoneDate', function() {
+        return function(date, format) {
+            date = moment.utc(date).toDate();
+            date = moment(date).format(format);
+
+            return date;
         }
     });
 'use strict';
@@ -566,13 +557,26 @@ ProjectPhaseService.$inject = ['$q', 'Restangular'];
 
 function ProjectPhaseService($q, Restangular) {
     var service = {
-        createPhase: createPhase
+        createPhase: createPhase,
+        getPhaseMeetings: getPhaseMeetings
     }
-    
+
     function createPhase(user, projectId, data) {
-        
+        return user.one('projects', projectId).all('phases').post(data).then(function(projectPhase) {
+            return projectPhase;
+        }, function(error) {
+            return $q.reject(error);
+        });
     }
-    
+
+    function getPhaseMeetings(user, projectId, phaseId) {
+        return user.one('projects', projectId).one('phases', phaseId).all('meetings').getList().then(function(meetings) {
+            return meetings;
+        }, function(error) {
+            return $q.reject(error);
+        });
+    }
+
     return service;
 }
 'use strict';
@@ -695,10 +699,24 @@ function CreateMeetingCtrl(Userservice, MeetingService, Messages, $state) {
     
     var vm = this;
     vm.meetingData = {};
-    var user = Userservice.user;
+    var user = Userservice.user;    
+
+    user.one('projects', user.current_project.id).doGETLIST('project-phases').then(function (phases) {
+        vm.phasesList = _.map(phases, function(phase) {
+            return {
+                id: phase.id,
+                name: phase.title
+            }
+        })
+    });    
     
     vm.createMeeting = function () {
         var projectId = user.current_project.id;
+
+        if (vm.meeting === 1) {
+            vm.meetingData.project_phase_id = null;
+        }
+
         MeetingService.createMeeting(user, projectId, vm.meetingData).then(function (meeting) {
             $state.transitionTo('di.main.project.settings', {userId: user.id, projectId: projectId});
             Messages.success('Meeting created successfully!');
@@ -715,9 +733,9 @@ angular
     .module('meeting')
     .controller('MeetingSettingsCtrl', MeetingSettingsCtrl);
 
-MeetingSettingsCtrl.$inject = ['$state', 'UserService', 'MeetingService'];
+MeetingSettingsCtrl.$inject = ['$state', 'UserService', 'MeetingService', '$filter'];
 
-function MeetingSettingsCtrl($state, UserService, MeetingService) {
+function MeetingSettingsCtrl($state, UserService, MeetingService, $filter) {
     
     var vm = this;
     var user = UserService.user;
@@ -725,7 +743,9 @@ function MeetingSettingsCtrl($state, UserService, MeetingService) {
     
     MeetingService.getMeeting(user, user.current_project.id, meetingId).then(function (meeting) {
         vm.meeting = meeting;
-    })
+        vm.meeting.start_date = moment.utc(vm.meeting.start_date);
+        vm.meeting.end_date = moment.utc(vm.meeting.end_date);
+    });
     
     vm.updateMeeting = function () {
         MeetingService.updateMeeting(user, user.current_project.id, meetingId, vm.meeting).then(function (meeting) {
@@ -789,22 +809,50 @@ angular
     .module('meeting')
     .controller('MeetingTimelineCtrl', MeetingTimelineCtrl);
 
-MeetingTimelineCtrl.$inject = ['$state', 'UserService', 'MeetingService', '$filter'];
+MeetingTimelineCtrl.$inject = ['$state', 'UserService', 'MeetingService', 'ProjectPhaseService'];
 
-function MeetingTimelineCtrl($state, UserService, MeetingService, $filter) {
+function MeetingTimelineCtrl($state, UserService, MeetingService, ProjectPhaseService) {
     
     var vm = this;
     var user = UserService.user;
     vm.project = user.current_project;
-    
-    user.one('projects', vm.project.id).doGETLIST('allMeetings').then(function (meetings) {
-        vm.meetings = meetings;
-        _.filter(vm.meetings, function (meeting) {
-            meeting.finishedTasks = _.filter(meeting.tasks, function (task) {
+
+    getAllMeetings();
+
+    user.one('projects', user.current_project.id).doGETLIST('project-phases').then(function(phases) {
+        vm.phasesList = _.map(phases, function(phase) {
+            return {
+                id: phase.id,
+                name: phase.title
+            }
+        })
+    });
+
+    vm.getPhaseMeetings = function(phase) {
+        if (!phase) {
+            getAllMeetings();
+        } else {
+            ProjectPhaseService.getPhaseMeetings(user, vm.project.id, phase.id).then(function(meetings) {
+                vm.meetings = meetings
+                getFinishedTasks(vm.meetings);
+            })
+        }
+    }
+
+    function getAllMeetings() {
+        user.one('projects', vm.project.id).doGETLIST('allMeetings').then(function (meetings) {
+            vm.meetings = meetings;
+            getFinishedTasks(vm.meetings);
+        });
+    }
+
+    function getFinishedTasks(meetings) {
+        _.forEach(meetings, function(meeting) {
+            meeting.finishedTasks = _.filter(meeting.tasks, function(task) {
                 return task.status == true
             }).length;
         });
-    });
+    }
     
 }
 'use strict';
@@ -820,6 +868,7 @@ function CreateProjectCtrl(ProjectService, $state, Messages, UserService) {
     var vm = this;
     vm.projectData = {};
     vm.user = UserService.user;
+    vm.minDate = moment().subtract(1, 'd');
 
     vm.createProject = function() {
         vm.projectData.created_by = vm.user.email;
@@ -1051,7 +1100,7 @@ function ProjectsListCtrl(loggedUser, UserService, ProjectService, $scope, $stat
         
         _.forEach(vm.projects, function (project) {
             _.forEach(project.meetings, function (meeting) {
-                 sum += Math.abs(new Date(meeting.meeting_end) - new Date(meeting.meeting_start));
+                 sum += Math.abs(new Date(meeting.end_date) - new Date(meeting.start_date));
                  project['meeting_hours'] = sum;
             });
             sum = 0;
@@ -1088,16 +1137,84 @@ function ProjectsListCtrl(loggedUser, UserService, ProjectService, $scope, $stat
 'use strict';
 
 angular
+    .module('auth')
+    .controller('AuthCtrl', AuthCtrl);
+
+    AuthCtrl.$inject = ['$scope', 'Restangular', '$localStorage', '$state', '$location', 'Messages'];
+
+function AuthCtrl($scope, Restangular, $localStorage, $state, $location, Messages) {
+
+    var vm = this;
+
+    vm.loginData = {};
+    vm.registrationData = {};
+
+    vm.login = function() {
+        Restangular.all('login').post(vm.loginData).then(function(res) {
+            $localStorage.token = res.token;
+            $state.transitionTo('di.main.home');
+        }, function(error) {
+            console.log(error);
+            Messages.warning("Invalid credentials!");
+        });
+    }
+
+    vm.registration = function() {
+        Restangular.all('registration').post(vm.registrationData).then(function(res) {
+            $state.transitionTo('login');
+        }, function(error) {
+            vm.validationErrors = error.data;
+            Messages.error("Check required fields!");
+        })
+    }
+
+}
+
+'use strict';
+
+angular
     .module('projectPhase')
     .controller('CreatePhaseCtrl', CreatePhaseCtrl);
-    
-    
-function CreatePhaseCtrl() {
+
+CreatePhaseCtrl.$inject = ['ProjectPhaseService', 'UserService']
+
+function CreatePhaseCtrl(ProjectPhaseService, UserService) {
+
     var vm = this;
-    
-    vm.createPhase = function () {
-        
+    var user = UserService.user;
+    vm.phaseData = {}
+    vm.minStartDate = moment().subtract(1, 'd');
+    vm.disableBtn = false;
+
+    vm.createPhase = function() {
+        vm.disableBtn = true;
+        ProjectPhaseService.createPhase(user, user.current_project.id, vm.phaseData).then(function(projectPhase) {
+            vm.phaseData = projectPhase;
+        }).catch(function(error) {
+            vm.validationErrors = error.data;
+        }).finally(function() {
+            vm.disableBtn = false;
+        })
     }
+}
+'use strict';
+
+angular
+    .module('projectPhase')
+    .controller('PhaseTimelineCtrl', PhaseTimelineCtrl);
+
+PhaseTimelineCtrl.$inject = ['UserService'];
+
+function PhaseTimelineCtrl(UserService) {
+
+    var vm = this;
+    var user = UserService.user;
+    vm.project = user.current_project;
+
+    user.one('projects', vm.project.id).doGETLIST('project-phases').then(function (phases) {
+        vm.phases = phases;
+    }); 
+    
 }
 'use strict';
 
@@ -1163,7 +1280,7 @@ function ProfileCtrl(UserService, loggedUser, Messages, $state, Upload, $modal) 
 'use strict';
 
 angular
-    .module('di.confirmPopUp', [])
+    .module('di.ui')
     .directive('afterConfirmation', confirmPopUp);
     
 function confirmPopUp() {
@@ -1188,7 +1305,43 @@ function confirmPopUp() {
 'use strict';
 
 angular
-    .module('di.ui', [])
+    .module('di.ui')
+    .directive('datepickerLocaldate', ['$parse', function ($parse) {
+            var directive = {
+                restrict: 'A',
+                require: ['ngModel'],
+                link: link
+            };
+            return directive;
+
+            function link(scope, element, attr, ctrls) {
+                var ngModelController = ctrls[0];
+
+                // called with a JavaScript Date object when picked from the datepicker
+                ngModelController.$parsers.push(function (viewValue) {
+                    // undo the timezone adjustment we did during the formatting
+                    viewValue.setMinutes(viewValue.getMinutes() - viewValue.getTimezoneOffset());
+                    // we just want a local date in ISO format
+                    return viewValue.toISOString().substring(0, 10);
+                });
+
+                // called with a 'yyyy-mm-dd' string to format
+                ngModelController.$formatters.push(function (modelValue) {
+                    if (!modelValue) {
+                        return undefined;
+                    }
+                    // date constructor will apply timezone deviations from UTC (i.e. if locale is behind UTC 'dt' will be one day behind)
+                    var dt = new Date(modelValue);
+                    // 'undo' the timezone offset again (so we end up on the original date again)
+                    dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());
+                    return dt;
+                });
+            }
+        }]);
+'use strict';
+
+angular
+    .module('di.ui')
     .directive('validationErrors', validationErrors);
 
 function validationErrors() {
@@ -1202,4 +1355,32 @@ function validationErrors() {
     }
 
     return directive;
+}
+
+'use strict';
+
+angular
+    .module('di.ui')
+    .directive('customTimeline', customTimeline);
+
+function customTimeline() {
+    var directive = {
+        restrict: 'E',
+        link: link,
+        replace:true,
+        scope: {
+            timelineData: '=',
+            project: '=',
+            dateFormat: '@?',
+            state: '@'
+        },
+        templateUrl: 'app/common/directives/Timeline/timeline.html',
+    }
+
+    function link(scope, elem, attr) {
+
+    }    
+
+    return directive;
+    
 }

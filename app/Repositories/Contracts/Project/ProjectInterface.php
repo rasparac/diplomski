@@ -12,4 +12,6 @@ interface ProjectInterface {
 
     public function delete($userId, $projectId);
 
+    public function getProjectPhases($userId, $projectId);
+
 }

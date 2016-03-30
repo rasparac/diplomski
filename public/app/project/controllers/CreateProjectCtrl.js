@@ -11,6 +11,7 @@ function CreateProjectCtrl(ProjectService, $state, Messages, UserService) {
     var vm = this;
     vm.projectData = {};
     vm.user = UserService.user;
+    vm.minDate = moment().subtract(1, 'd');
 
     vm.createProject = function() {
         vm.projectData.created_by = vm.user.email;

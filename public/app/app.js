@@ -3,8 +3,9 @@
 angular
     .module('di',
     ['restangular', 'ui.router', 'di.ui', 'main', 'ngStorage', 'auth', 'home', 'project', 'ui.bootstrap',
-    'mgcrea.ngStrap', 'profile', 'di.messages', 'userService', 'projectService', 'ngFileUpload', 'ngImgCrop', 'invitationService',
-    'meeting', 'meetingService', 'projectPhase', 'angular-timeline', 'di.filters', 'meetingTaskService', 'di.confirmPopUp'])
+        'mgcrea.ngStrap', 'profile', 'di.messages', 'userService', 'projectService', 'ngFileUpload', 'ngImgCrop', 'invitationService',
+        'meeting', 'meetingService', 'projectPhase', 'angular-timeline', 'di.filters', 'meetingTaskService', 'projectPhaseService'
+        ])
     .config(function(RestangularProvider, $stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
@@ -32,6 +33,7 @@ angular
             },
             responseError: function(response) {
                 if (response.status === 401 || response.status === 403) {
+                    console.log("response", response);
                     delete $localStorage.token;
                     $location.path('/login');
                 }

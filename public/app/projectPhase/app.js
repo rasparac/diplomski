@@ -15,4 +15,10 @@ angular
                 controller: 'CreatePhaseCtrl',
                 controllerAs: 'createPhase'
             })
+            .state('di.main.phase.timeline', {
+                url: '/phase-timeline',
+                templateUrl: 'app/projectPhase/views/phaseTimeline.html',
+                controller: 'PhaseTimelineCtrl',
+                controllerAs: 'phaseTimeline'
+            })
     });
