@@ -26,7 +26,9 @@ angular
         return {
             request: function(config) {
                 config.headers = config.headers || {};
+
                 if ($localStorage.token) {
+                    //delete $localStorage.token;
                     config.headers.Authorization = 'Bearer ' + $localStorage.token;
                 }
                 return config;

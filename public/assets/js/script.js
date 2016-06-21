@@ -26,7 +26,9 @@ angular
         return {
             request: function(config) {
                 config.headers = config.headers || {};
+
                 if ($localStorage.token) {
+                    //delete $localStorage.token;
                     config.headers.Authorization = 'Bearer ' + $localStorage.token;
                 }
                 return config;
@@ -76,18 +78,22 @@ angular
 'use strict';
 
 angular
-    .module('home', ['restangular', 'ui.router'])
+    .module('auth', ['restangular', 'ui.router', 'ngStorage', 'toastr'])
     .config(function(RestangularProvider, $stateProvider, $locationProvider) {
         $stateProvider
-            .state('di.main.home', {
-                url: 'home',
-                templateUrl: 'app/home/views/home.html',
-                data: {
-                    appName: 'Home'
-                }
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/auth/views/login.html',
+                controller: 'AuthCtrl',
+                controllerAs: 'auth'
             })
+            .state('registration', {
+                url: '/registration',
+                templateUrl: 'app/auth/views/registration.html',
+                controller: 'AuthCtrl',
+                controllerAs: 'auth'
+            });
     });
-
 'use strict';
 
 angular
@@ -152,6 +158,21 @@ angular
                     loggedUser: function(UserService) {
                         return UserService.getUser();
                     }
+                }
+            })
+    });
+
+'use strict';
+
+angular
+    .module('home', ['restangular', 'ui.router'])
+    .config(function(RestangularProvider, $stateProvider, $locationProvider) {
+        $stateProvider
+            .state('di.main.home', {
+                url: 'home',
+                templateUrl: 'app/home/views/home.html',
+                data: {
+                    appName: 'Home'
                 }
             })
     });
@@ -251,25 +272,6 @@ angular
 'use strict';
 
 angular
-    .module('auth', ['restangular', 'ui.router', 'ngStorage', 'toastr'])
-    .config(function(RestangularProvider, $stateProvider, $locationProvider) {
-        $stateProvider
-            .state('login', {
-                url: '/login',
-                templateUrl: 'app/auth/views/login.html',
-                controller: 'AuthCtrl',
-                controllerAs: 'auth'
-            })
-            .state('registration', {
-                url: '/registration',
-                templateUrl: 'app/auth/views/registration.html',
-                controller: 'AuthCtrl',
-                controllerAs: 'auth'
-            });
-    });
-'use strict';
-
-angular
     .module('projectPhase', ['ui.router'])
     .config(function ($stateProvider) {
         $stateProvider
@@ -304,6 +306,42 @@ angular
             controllerAs: 'profile'
         })
     });
+
+'use strict';
+
+angular
+    .module('auth')
+    .controller('AuthCtrl', AuthCtrl);
+
+    AuthCtrl.$inject = ['$scope', 'Restangular', '$localStorage', '$state', '$location', 'Messages'];
+
+function AuthCtrl($scope, Restangular, $localStorage, $state, $location, Messages) {
+
+    var vm = this;
+
+    vm.loginData = {};
+    vm.registrationData = {};
+
+    vm.login = function() {
+        Restangular.all('login').post(vm.loginData).then(function(res) {
+            $localStorage.token = res.token;
+            $state.transitionTo('di.main.home');
+        }, function(error) {
+            console.log(error);
+            Messages.warning("Invalid credentials!");
+        });
+    }
+
+    vm.registration = function() {
+        Restangular.all('registration').post(vm.registrationData).then(function(res) {
+            $state.transitionTo('login');
+        }, function(error) {
+            vm.validationErrors = error.data;
+            Messages.error("Check required fields!");
+        })
+    }
+
+}
 
 'use strict';
 
@@ -644,8 +682,6 @@ function UserService(Restangular, Messages, $q) {
         changeCurrentProject: changeCurrentProject,
         getUserProjects: getUserProjects
     }
-
-    return service;
     
     service.user = null;
 
@@ -685,6 +721,8 @@ function UserService(Restangular, Messages, $q) {
         });
     }
 
+    return service;
+
 }
 
 'use strict';
@@ -718,7 +756,7 @@ function CreateMeetingCtrl(Userservice, MeetingService, Messages, $state) {
         }
 
         MeetingService.createMeeting(user, projectId, vm.meetingData).then(function (meeting) {
-            $state.transitionTo('di.main.project.settings', {userId: user.id, projectId: projectId});
+            $state.transitionTo('di.main.project.settings', { userId: user.id, projectId: projectId });
             Messages.success('Meeting created successfully!');
         }).catch(function (error) {
             vm.validationErrors = error.data;
@@ -1137,42 +1175,6 @@ function ProjectsListCtrl(loggedUser, UserService, ProjectService, $scope, $stat
 'use strict';
 
 angular
-    .module('auth')
-    .controller('AuthCtrl', AuthCtrl);
-
-    AuthCtrl.$inject = ['$scope', 'Restangular', '$localStorage', '$state', '$location', 'Messages'];
-
-function AuthCtrl($scope, Restangular, $localStorage, $state, $location, Messages) {
-
-    var vm = this;
-
-    vm.loginData = {};
-    vm.registrationData = {};
-
-    vm.login = function() {
-        Restangular.all('login').post(vm.loginData).then(function(res) {
-            $localStorage.token = res.token;
-            $state.transitionTo('di.main.home');
-        }, function(error) {
-            console.log(error);
-            Messages.warning("Invalid credentials!");
-        });
-    }
-
-    vm.registration = function() {
-        Restangular.all('registration').post(vm.registrationData).then(function(res) {
-            $state.transitionTo('login');
-        }, function(error) {
-            vm.validationErrors = error.data;
-            Messages.error("Check required fields!");
-        })
-    }
-
-}
-
-'use strict';
-
-angular
     .module('projectPhase')
     .controller('CreatePhaseCtrl', CreatePhaseCtrl);
 
@@ -1342,25 +1344,6 @@ angular
 
 angular
     .module('di.ui')
-    .directive('validationErrors', validationErrors);
-
-function validationErrors() {
-    var directive = {
-        restrict: 'E',
-        scope: {
-            errorMessages: '=?'
-        },
-        templateUrl: 'app/common/directives/ValidationErrors/ValidationErrors.html',
-        replace: true
-    }
-
-    return directive;
-}
-
-'use strict';
-
-angular
-    .module('di.ui')
     .directive('customTimeline', customTimeline);
 
 function customTimeline() {
@@ -1383,4 +1366,22 @@ function customTimeline() {
 
     return directive;
     
+}
+'use strict';
+
+angular
+    .module('di.ui')
+    .directive('validationErrors', validationErrors);
+
+function validationErrors() {
+    var directive = {
+        restrict: 'E',
+        scope: {
+            errorMessages: '=?'
+        },
+        templateUrl: 'app/common/directives/ValidationErrors/ValidationErrors.html',
+        replace: true
+    }
+
+    return directive;
 }

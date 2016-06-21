@@ -14,8 +14,6 @@ function UserService(Restangular, Messages, $q) {
         changeCurrentProject: changeCurrentProject,
         getUserProjects: getUserProjects
     }
-
-    return service;
     
     service.user = null;
 
@@ -54,5 +52,7 @@ function UserService(Restangular, Messages, $q) {
             return $q.reject(error);
         });
     }
+
+    return service;
 
 }
