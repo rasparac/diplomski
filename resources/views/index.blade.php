@@ -25,7 +25,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.6/angular-strap.tpl.js"></script>
         <script type="text/javascript" src="/lib/angular-ui/angular-toastr.tpls.js"></script>
         <script type="text/javascript" src="/lib/bootstrap-ui/ui-bootstrap-tpls.min.js"></script>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.5.2/restangular.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script> 
         <script type="text/javascript" src="/assets/js/script.js"></script>
         <base href="/">

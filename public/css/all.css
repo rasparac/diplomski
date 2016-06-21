@@ -282,6 +282,41 @@
   left: 95px;
   line-height: 2;
 }
+.project-settings .page-header {
+  margin: 0 0 30px;
+}
+
+.project-settings .page-header button {
+  margin-top: -45px;
+}
+
+.project-settings .project-settings-footer {
+  margin-top: 15px;
+  margin-right: 0px;
+}
+
+.project-settings .upload-files {
+  left: 5%;
+}
+
+.project-settings .phase {
+  margin-right: 10px;
+}
+.project-timeline .start {
+  top: -20px;
+}
+
+.project-timeline .timeline-header {
+  padding-bottom: 20px;
+}
+.project-phase .new-phase .page-header {
+  margin: 0 0 30px;
+}
+.project-phase-timeline .timeline-header {
+  border-bottom: 1px solid #808080;
+  margin-bottom: 55px;
+  margin-top: 20px;
+}
 .data-timeline .start {
   top: -35px;
 }
@@ -326,39 +361,4 @@
 .modal.upload-picture .select-picture {
   margin-top: 10px;
   margin-bottom: -20px;
-}
-.project-settings .page-header {
-  margin: 0 0 30px;
-}
-
-.project-settings .page-header button {
-  margin-top: -45px;
-}
-
-.project-settings .project-settings-footer {
-  margin-top: 15px;
-  margin-right: 0px;
-}
-
-.project-settings .upload-files {
-  left: 5%;
-}
-
-.project-settings .phase {
-  margin-right: 10px;
-}
-.project-timeline .start {
-  top: -20px;
-}
-
-.project-timeline .timeline-header {
-  padding-bottom: 20px;
-}
-.project-phase .new-phase .page-header {
-  margin: 0 0 30px;
-}
-.project-phase-timeline .timeline-header {
-  border-bottom: 1px solid #808080;
-  margin-bottom: 55px;
-  margin-top: 20px;
 }
