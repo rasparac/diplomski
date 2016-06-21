@@ -282,14 +282,6 @@
   left: 95px;
   line-height: 2;
 }
-.project-phase .new-phase .page-header {
-  margin: 0 0 30px;
-}
-.project-phase-timeline .timeline-header {
-  border-bottom: 1px solid #808080;
-  margin-bottom: 55px;
-  margin-top: 20px;
-}
 .data-timeline .start {
   top: -35px;
 }
@@ -361,4 +353,12 @@
 
 .project-timeline .timeline-header {
   padding-bottom: 20px;
+}
+.project-phase .new-phase .page-header {
+  margin: 0 0 30px;
+}
+.project-phase-timeline .timeline-header {
+  border-bottom: 1px solid #808080;
+  margin-bottom: 55px;
+  margin-top: 20px;
 }

@@ -97,6 +97,21 @@ angular
 'use strict';
 
 angular
+    .module('home', ['restangular', 'ui.router'])
+    .config(function(RestangularProvider, $stateProvider, $locationProvider) {
+        $stateProvider
+            .state('di.main.home', {
+                url: 'home',
+                templateUrl: 'app/home/views/home.html',
+                data: {
+                    appName: 'Home'
+                }
+            })
+    });
+
+'use strict';
+
+angular
     .module('home')
     .controller('MainCtrl', MainCtrl);
 
@@ -158,21 +173,6 @@ angular
                     loggedUser: function(UserService) {
                         return UserService.getUser();
                     }
-                }
-            })
-    });
-
-'use strict';
-
-angular
-    .module('home', ['restangular', 'ui.router'])
-    .config(function(RestangularProvider, $stateProvider, $locationProvider) {
-        $stateProvider
-            .state('di.main.home', {
-                url: 'home',
-                templateUrl: 'app/home/views/home.html',
-                data: {
-                    appName: 'Home'
                 }
             })
     });
